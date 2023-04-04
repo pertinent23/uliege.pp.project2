@@ -1,0 +1,8 @@
+*.o
+*.ppm
+*.pbm
+*.pgm
+*.txt
+stegano
+!test_data/*
+!pnm/*

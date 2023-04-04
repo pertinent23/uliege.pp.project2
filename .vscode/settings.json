@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "*.html": "html",
+        "*.rmd": "markdown",
+        "stegano.h": "c",
+        "stdio.h": "c",
+        "assert.h": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "utility": "c",
+        "system_error": "c"
+    }
+}
