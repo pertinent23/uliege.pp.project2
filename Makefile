@@ -17,10 +17,13 @@ DT=doxygen
 
 # Files
 EXEC=stegano
-MODULES=pnm.c stegano.c main-stegano.c
+MODULES=pnm/pnm.c pnm/utils.c
 OBJECTS=pnm/pnm.o pnm/utils.o stegano.o main-stegano.o
 OUTPUT=steganographie.tar.gz
 CONFIG=doxygen.config
+PNM_TESTS=pnm_tests
+STEGANO_TESTS=stegano_tests
+SEATEST=seatest/seatest.c
 
 .PHONY: $(EXEC)
 
@@ -36,11 +39,18 @@ stegano.o: stegano.c
 pnm:
 	cd $(PWD)/pnm && make pnm
 
+$(PNM_TESTS):
+	$(LD) -o $(PNM_TESTS) $(SEATEST) $(MODULES) $(PNM_TESTS).c $(LDFLAGS)
+
+$(STEGANO_TESTS):
+	$(LD) -o $(STEGANO_TESTS) $(SEATEST) $(MODULES) $(STEGANO_TESTS).c $(LDFLAGS)
+
 clean_pnm:
 	cd $(PWD)/pnm && make clean
 
 clean: clean_pnm
 	rm -f *.o *.ppm *.pgm *.pbm *.txt $(EXEC) $(OUTPUT) *~
+	clear
 
 archive: clean
 	$(AT) $(ATFLAGS) $(OUTPUT) *
