@@ -6,3 +6,6 @@
 stegano
 !test_data/*
 !pnm/*
+
+pnm_tests
+stegano_tests

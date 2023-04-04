@@ -117,11 +117,10 @@ static int initialise(struct PNM_t *image, int lignes, int colones)
 void detruit_pnm(struct PNM_t *image) 
 {
    assert(image != NULL && image->nb_lignes > 0 && image->nb_colones > 0);
-   int i = 0;
 
    if (image->matrice != NULL)
    {
-      for(; i<image->nb_lignes; i++)
+      for(int i = 0; i<image->nb_lignes; i++)
       {
          if (image->matrice[i] != NULL)
             free(image->matrice[i]);
@@ -138,6 +137,7 @@ int load_pnm(PNM **image, char* filename) {
 
    FILE *fichier = fopen(filename, "r");
    char nombre_magique[3];
+   return 0;
 
    if (fichier != NULL)
    {

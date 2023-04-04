@@ -10,6 +10,9 @@
         "initializer_list": "c",
         "utility": "c",
         "system_error": "c",
-        "seatest.h": "c"
+        "seatest.h": "c",
+        "pnm.h": "c",
+        "utils.h": "c",
+        "functional": "c"
     }
 }

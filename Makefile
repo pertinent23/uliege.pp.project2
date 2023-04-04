@@ -17,7 +17,7 @@ DT=doxygen
 
 # Files
 EXEC=stegano
-MODULES=pnm/pnm.c pnm/utils.c
+MODULES=pnm/pnm.c pnm/utils.c stegano.c
 OBJECTS=pnm/pnm.o pnm/utils.o stegano.o main-stegano.o
 OUTPUT=steganographie.tar.gz
 CONFIG=doxygen.config
@@ -27,7 +27,7 @@ SEATEST=seatest/seatest.c
 
 .PHONY: $(EXEC)
 
-$(EXEC): $(OBJECTS) pnm
+$(EXEC): $(OBJECTS) pnm_create
 	$(LD) -o $(EXEC) $(OBJECTS) $(LDFLAGS)
 
 main-stegano.o: main-stegano.c
@@ -36,20 +36,20 @@ main-stegano.o: main-stegano.c
 stegano.o: stegano.c
 	$(CC) -c $^ -o $@ $(CFLAGS)
 
-pnm:
+pnm_create: pnm/pnm.c pnm/utils.c
 	cd $(PWD)/pnm && make pnm
 
-$(PNM_TESTS):
-	$(LD) -o $(PNM_TESTS) $(SEATEST) $(MODULES) $(PNM_TESTS).c $(LDFLAGS)
+$(PNM_TESTS): $(PNM_TESTS).c
+	$(LD) $(CFLAGS) $(MODULES) $(SEATEST) $(PNM_TESTS).c -o $(PNM_TESTS)
 
-$(STEGANO_TESTS):
-	$(LD) -o $(STEGANO_TESTS) $(SEATEST) $(MODULES) $(STEGANO_TESTS).c $(LDFLAGS)
+$(STEGANO_TESTS): $(STEGANO_TESTS).c
+	$(LD) $(MODULES) $(SEATEST) $(STEGANO_TESTS).c -o $(STEGANO_TESTS) $(CFLAGS)
 
 clean_pnm:
 	cd $(PWD)/pnm && make clean
 
 clean: clean_pnm
-	rm -f *.o *.ppm *.pgm *.pbm *.txt $(EXEC) $(OUTPUT) *~
+	rm -f *.o *.ppm *.pgm *.pbm *.txt $(STEGANO_TESTS) $(PNM_TESTS) $(EXEC) $(OUTPUT) *~
 	clear
 
 archive: clean
